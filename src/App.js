@@ -1,8 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import CoinbaseProFeed from './CoinbaseProFeed'
+import CurrentPrice from './CurrentPrice'
 
 function App() {
+  const coinbaseProFeed = new CoinbaseProFeed()
+  const priceEvents = coinbaseProFeed.priceEvents
   return (
     <div className="App">
       <header className="App-header">
@@ -10,15 +13,7 @@ function App() {
         <p>
           Crypto Toolkit
         </p>
-        <CoinbaseProFeed />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <CurrentPrice events={{priceEvents: priceEvents}} />
       </header>
     </div>
   );
