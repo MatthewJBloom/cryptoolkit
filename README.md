@@ -8,6 +8,9 @@ This project is a React + Electron App for observing and trading crypto
 - [ ] Make a current-btc-usd string component and use that instead of ^
 - [ ] Customize app (favicon, title, readme, etc)
 
+- [ ] Implement Electron
+- [ ] Add build directions to README.md
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
