@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import CoinbaseProFeed from './CoinbaseProFeed'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <p>
           Crypto Toolkit
         </p>
+        <CoinbaseProFeed />
         <a
           className="App-link"
           href="https://reactjs.org"
