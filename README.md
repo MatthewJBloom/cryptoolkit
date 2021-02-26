@@ -7,10 +7,9 @@ This project is a React + Electron App for observing and trading crypto
 - [x] Extract CoinbaseProFeed for use in multiple components
 - [x] Make a current-btc-usd string component and use that instead of ^
 - [ ] Customize app (favicon, title, readme, etc)
-
-- [ ] Implement Electron
-- [ ] Add build directions to README.md
-
+- [x] Implement Electron
+- [x] Add build directions to README.md
+- [ ] Implement new scripts to only have to run one script to run & one script to build (https://itnext.io/4-solutions-to-run-multiple-node-js-or-npm-commands-simultaneously-9edaa6215a93)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -51,6 +50,38 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+### `npm run electron-start`
+
+Runs the electron app. Must have the react app running in another console via `npm start`.
+
+### `npm run electron-pack`
+
+Runs electron-builder --dir to test prior to electron-dist.
+
+### `npm run electron-dist`
+
+Runs electron-builder. Must have already built the React App via `npm run build`.
+
+## Run as Dev Instructions
+
+### Run as React App (no Electron)
+
+* `npm start`
+* Open browser tab and navigate to http://localhost:3000
+
+### Run as Electron App
+
+* `npm start`
+* Open new console tab
+* `npm run electron-start`
+
+## Build Instructions
+
+If you would rather build locally rather than using the most recent Release, here are the instructions.
+
+* `npm run build`
+* `npm run electron-dist`
 
 ## Learn More
 
