@@ -4,8 +4,8 @@ This project is a React + Electron App for observing and trading crypto
 
 ## Todo
 
-- [ ] Extract CoinbaseProFeed for use in multiple components
-- [ ] Make a current-btc-usd string component and use that instead of ^
+- [x] Extract CoinbaseProFeed for use in multiple components
+- [x] Make a current-btc-usd string component and use that instead of ^
 - [ ] Customize app (favicon, title, readme, etc)
 
 - [ ] Implement Electron
