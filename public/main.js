@@ -38,8 +38,9 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  ipcMain.once('something', (event, arg) => {
-    console.log('something', arg)
+  ipcMain.once('ping', (event, arg) => {
+    console.log('ping', arg)
+    event.reply('pong', 'pong-arg')
   })
 
 })

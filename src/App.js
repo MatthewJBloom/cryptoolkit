@@ -31,7 +31,10 @@ function App() {
         }}} />
         <NotificationList />
         <button onClick={()=>{
-          ipcRenderer.send('something', 'ping')
+          ipcRenderer.send('ping', 'ping-arg')
+          ipcRenderer.once('pong', (event, arg) => {
+            console.log('pong', arg)
+          })
         }}>Something</button>
       </header>
     </div>
