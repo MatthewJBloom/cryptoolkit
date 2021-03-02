@@ -5,7 +5,7 @@ import CurrentPrice from './CurrentPrice'
 import NotificationForm from './NotificationForm'
 import NotificationList from './NotificationList'
 import NotificationManager from './NotificationManager'
-//import Notification from './Notification'
+const { ipcRenderer } = window.require('electron')
 
 function App() {
   const coinbaseProFeed = new CoinbaseProFeed()
@@ -14,7 +14,7 @@ function App() {
   const notificationManager = new NotificationManager()
   notificationManager.listen(priceEvents)
 
-  
+
 
   return (
     <div className="App">
@@ -30,6 +30,9 @@ function App() {
           })
         }}} />
         <NotificationList />
+        <button onClick={()=>{
+          ipcRenderer.send('something', 'ping')
+        }}>Something</button>
       </header>
     </div>
   );
