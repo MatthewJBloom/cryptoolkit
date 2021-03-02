@@ -41,6 +41,7 @@ app.whenReady().then(() => {
   const coinbaseProFeed = new CoinbaseProFeed()
   const priceEvents = coinbaseProFeed.priceEvents
   ipcMain.once('CurrentPriceMounted', (event, arg) => {
+    coinbaseProFeed.startFeed()
     priceEvents.on('price', price => {
       event.reply('price', price)
     })
