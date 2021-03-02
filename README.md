@@ -24,26 +24,38 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Alias for `start-react`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `npm run start-react`
+
+Starts the React app with BROWSER=none (alias for `start-react-win`, use `npm run start-react-bash` if using Bash)
+
+### `npm run start-electron`
+
+Starts the electron app. Must have the React app running in another console via `npm run start-react`.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
+Alias for `test-react`
+
+### `npm run test-react`
+
+Launches the React test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Alias for `npm run build-react`
+
+### `npm run build-react`
+
+Builds the React app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm run build-electron`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the Electron app for distribution to the `dist` folder.
+Requires the `build` folder from `npm run build-react` first.
 
 ### `npm run eject`
 
@@ -55,37 +67,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-### `npm run electron-start`
-
-Runs the electron app. Must have the react app running in another console via `npm start`.
-
-### `npm run electron-pack`
-
-Runs electron-builder --dir to test prior to electron-dist.
-
-### `npm run electron-dist`
-
-Runs electron-builder. Must have already built the React App via `npm run build`.
-
 ## Run as Dev Instructions
 
-### Run as React App (no Electron)
-
-* `npm start`
-* Open browser tab and navigate to http://localhost:3000
-
-### Run as Electron App
-
-* `npm start`
+* `npm start` or `npm start-react`
 * Open new console tab
-* `npm run electron-start`
+* `npm run start-electron`
 
 ## Build Instructions
 
 If you would rather build locally rather than using the most recent Release, here are the instructions.
 
-* `npm run build`
-* `npm run electron-dist`
+* `npm run build` or `npm run build-react`
+* `npm run build-electron`
+
+***
 
 ## Learn More
 
