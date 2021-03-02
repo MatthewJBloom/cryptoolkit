@@ -61,6 +61,7 @@ app.whenReady().then(() => {
 
   // Create NotificationManager
   const notificationManager = new NotificationManager()
+  notificationManager.listen(coinbaseProFeed.priceEvents)
 
   // Once the NotificationForm component has mounted, listen for
   // new notifications...
@@ -69,7 +70,9 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('NewNotification', (event, arg) => {
-    console.log('new notification', arg)
+    notificationManager.newNotification("BTC", arg).then(notification => {
+      console.log('created new notification', notification)
+    })
   })
 
 }) // app.whenReady().then(() => { ...
