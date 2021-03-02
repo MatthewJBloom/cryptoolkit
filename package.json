@@ -1,7 +1,7 @@
 {
   "name": "cryptoolkit",
   "version": "0.1.0",
-  "main": "public/Main.js",
+  "main": "public/main.js",
   "homepage": "./",
   "private": true,
   "dependencies": {
@@ -26,8 +26,8 @@
     "electron-start": "npm run electron-start-win",
     "electron-start-win": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
     "electron-start-bash": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
-    "electron-pack": "electron-builder --win --dir -c.extraMetadata.main=build/Main.js",
-    "electron-dist": "electron-builder --win -c.extraMetadata.main=build/Main.js"
+    "electron-pack": "electron-builder --win --dir -c.extraMetadata.main=build/main.js",
+    "electron-dist": "electron-builder --win -c.extraMetadata.main=build/main.js"
   },
   "eslintConfig": {
     "extends": [
