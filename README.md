@@ -13,7 +13,7 @@ This project is a React + Electron App for observing and trading crypto
 - [ ] Implement NotificationManager and Notify (rename)
 - [ ] Tie Notif-Man & Notif into Notif-Form & List
 - [x] Research Babel/Webpack & ipcMain, contextBridge
-- [ ] Organize & document architecture (App components vs Main components)
+- [ ] Organize & document architecture (https://saurabhshah23.medium.com/react-js-architecture-features-folder-structure-design-pattern-70b7b9103f22)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
