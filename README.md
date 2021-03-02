@@ -9,7 +9,9 @@ This project is a React + Electron App for observing and trading crypto
 - [ ] Customize app (favicon, title, readme, etc)
 - [x] Implement Electron
 - [x] Add build directions to README.md
-- [ ] Implement new scripts to only have to run one script to run & one script to build (https://itnext.io/4-solutions-to-run-multiple-node-js-or-npm-commands-simultaneously-9edaa6215a93)
+- [x] Implement new scripts to only have to run one script to run & one script to build (https://itnext.io/4-solutions-to-run-multiple-node-js-or-npm-commands-simultaneously-9edaa6215a93)
+- [ ] Implement NotificationManager and Notify (rename)
+- [ ] Tie Notif-Man & Notif into Notif-Form & List
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
