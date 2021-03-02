@@ -15,6 +15,9 @@ function createWindow () {
     }
   })
 
+  // Hide the menu bar
+  mainWindow.removeMenu()
+
   // Load either 'http://localhost:3000' or `file://${path.join(__dirname, '../build/index.html')}`
   const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`
   mainWindow.loadURL(startUrl)
