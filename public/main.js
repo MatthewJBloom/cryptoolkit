@@ -3,7 +3,7 @@ const { app, BrowserWindow, Notification, ipcMain } = require('electron')
 const path = require('path')
 // Custom Classes
 const CoinbaseProFeed = require('../src/CoinbaseProFeed')
-// const NotificationManager = require('./src/NotificationManager')
+const NotificationManager = require('../src/NotificationManager')
 
 function createWindow () {
   // Create the browser window.
@@ -38,13 +38,38 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
+  // Create CoinbaseProFeed
   const coinbaseProFeed = new CoinbaseProFeed()
-  const priceEvents = coinbaseProFeed.priceEvents
+
+  // Once the CurrentPrice component has mounted, reply with price events
+  // from the CoinbaseProFeed priceEvents EventEmitter
   ipcMain.once('CurrentPriceMounted', (event, arg) => {
     coinbaseProFeed.startFeed()
-    priceEvents.on('price', price => {
-      event.reply('price', price)
+    coinbaseProFeed.priceEvents.on('price', price => {
+      // Catch errors when closing the app and a reply tries to sneak through
+      try {
+        event.reply('price', price)
+      } catch (e) {
+        if (e instanceof TypeError && e.message == 'Object has been destroyed') {
+          console.log(`TypeError: '${e.message}' mitigated.`)
+        } else {
+          throw e
+        }
+      }
     })
+  })
+
+  // Create NotificationManager
+  const notificationManager = new NotificationManager()
+
+  // Once the NotificationForm component has mounted, listen for
+  // new notifications...
+  ipcMain.once('NotificationFormMounted', (event, arg) => {
+    console.log('Notification Form Mounted')
+  })
+
+  ipcMain.on('NewNotification', (event, arg) => {
+    console.log('new notification', arg)
   })
 
 }) // app.whenReady().then(() => { ...
