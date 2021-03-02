@@ -13,9 +13,7 @@ function App() {
           Crypto Toolkit
         </p>
         <CurrentPrice />
-        <NotificationForm callbacks={{addNotification: function(price){
-          console.log('set notification:', price)
-        }}} />
+        <NotificationForm />
         <NotificationList />
       </header>
     </div>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
+const { ipcRenderer } = window.require('electron')
 
 class NotificationForm extends Component {
   constructor(props) {
     super()
     this.state = {value: ''}
-    this.addNotification = props.callbacks.addNotification
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -16,14 +16,14 @@ class NotificationForm extends Component {
 
   handleSubmit(event) {
     // alert(`this was submitted: ${this.state.value}`)
-    this.addNotification(this.state.value)
+    ipcRenderer.send('NewNotification', this.state.value)
     event.preventDefault()
   }
 
   // When the component has been rendered to the DOM
-  // componentDidMount() {
-  //
-  // }
+  componentDidMount() {
+    ipcRenderer.send('NotificationFormMounted')
+  }
 
   render() {
     return (
