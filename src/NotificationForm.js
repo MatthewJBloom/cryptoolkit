@@ -4,7 +4,7 @@ class NotificationForm extends Component {
   constructor(props) {
     super()
     this.state = {value: ''}
-    this.callback = props.callback
+    this.addNotification = props.callbacks.addNotification
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -16,7 +16,7 @@ class NotificationForm extends Component {
 
   handleSubmit(event) {
     // alert(`this was submitted: ${this.state.value}`)
-    this.callback(this.state.value)
+    this.addNotification(this.state.value)
     event.preventDefault()
   }
 

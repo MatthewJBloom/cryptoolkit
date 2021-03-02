@@ -15,7 +15,9 @@
     "websocket": "^1.0.33"
   },
   "scripts": {
-    "start": "npm run start-win",
+    "start": "npm run start-quiet",
+    "react-start": "react-scripts start",
+    "start-quiet": "npm run start-win",
     "start-win": "set BROWSER=none && react-scripts start",
     "start-bash": "export BROWSER=none && react-scripts start",
     "build": "react-scripts build",

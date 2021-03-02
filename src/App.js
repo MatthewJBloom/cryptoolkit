@@ -4,10 +4,17 @@ import CoinbaseProFeed from './CoinbaseProFeed'
 import CurrentPrice from './CurrentPrice'
 import NotificationForm from './NotificationForm'
 import NotificationList from './NotificationList'
+import NotificationManager from './NotificationManager'
+//import Notification from './Notification'
 
 function App() {
   const coinbaseProFeed = new CoinbaseProFeed()
   const priceEvents = coinbaseProFeed.priceEvents
+
+  const notificationManager = new NotificationManager()
+  notificationManager.listen(priceEvents)
+
+  
 
   return (
     <div className="App">
@@ -17,9 +24,11 @@ function App() {
           Crypto Toolkit
         </p>
         <CurrentPrice events={priceEvents} />
-        <NotificationForm callback={function(sub){
-          console.log(sub)
-        }} />
+        <NotificationForm callbacks={{addNotification: function(price){
+          notificationManager.newNotification("BTC", price).then(notif => {
+            console.log('set notification:', notif)
+          })
+        }}} />
         <NotificationList />
       </header>
     </div>
