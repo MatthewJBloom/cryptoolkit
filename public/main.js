@@ -38,12 +38,6 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  // Example ping-pong with App.js
-  ipcMain.once('ping', (event, arg) => {
-    console.log('ping', arg)
-    event.reply('pong', 'pong-arg')
-  })
-
   const coinbaseProFeed = new CoinbaseProFeed()
   const priceEvents = coinbaseProFeed.priceEvents
   ipcMain.once('CurrentPriceMounted', (event, arg) => {

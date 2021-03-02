@@ -3,7 +3,6 @@ import './App.css';
 import CurrentPrice from './CurrentPrice'
 import NotificationForm from './NotificationForm'
 import NotificationList from './NotificationList'
-const { ipcRenderer } = window.require('electron')
 
 function App() {
   return (
@@ -18,12 +17,6 @@ function App() {
           console.log('set notification:', price)
         }}} />
         <NotificationList />
-        <button onClick={()=>{
-          ipcRenderer.send('ping', 'ping-arg')
-          ipcRenderer.once('pong', (event, arg) => {
-            console.log('pong', arg)
-          })
-        }}>Test Ping-Pong</button>
       </header>
     </div>
   );
