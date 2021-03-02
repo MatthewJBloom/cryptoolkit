@@ -4,6 +4,7 @@ const path = require('path')
 // Custom Classes
 const CoinbaseProFeed = require('./CoinbaseProFeed')
 const NotificationManager = require('./NotificationManager')
+// NOTE: any requirements for the main process have to be in /public
 
 function createWindow () {
   // Create the browser window.
