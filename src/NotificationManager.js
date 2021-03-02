@@ -1,5 +1,4 @@
-// const Alert = require('./Alert')
-import Alert from './Alert'
+const Notification = require('./Notify')
 
 /**
  * Represents a handler/manager for Notifications
@@ -18,11 +17,10 @@ class NotificationManager {
    * @param {float} price - The price to notify on, e.g. 50000.00
    * @returns {Promise} notification - The notification
    */
-  async newNotification(coin_id="BTC", price) {
-    console.log(this)
+  async newNotification(coin_id, price) {
     let notification_id = this.getNewID(coin_id, price)
     let position = await this.getNewPosition(price)
-    let notification = new Alert(notification_id, coin_id, price, position)
+    let notification = new Notification(notification_id, coin_id, price, position)
     this.notifications[notification_id] = notification
     return notification
   } // newNotification(price)
@@ -99,4 +97,4 @@ class NotificationManager {
 
 } // NotificationManager
 
-export default NotificationManager
+module.exports = NotificationManager
