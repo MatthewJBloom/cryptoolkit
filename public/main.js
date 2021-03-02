@@ -2,7 +2,7 @@
 const { app, BrowserWindow, Notification, ipcMain } = require('electron')
 const path = require('path')
 // Custom Classes
-// const CoinbaseProFeed = require('./src/CoinbaseProFeed')
+const CoinbaseProFeed = require('../src/CoinbaseProFeed')
 // const NotificationManager = require('./src/NotificationManager')
 
 function createWindow () {
@@ -38,12 +38,21 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
+  // Example ping-pong with App.js
   ipcMain.once('ping', (event, arg) => {
     console.log('ping', arg)
     event.reply('pong', 'pong-arg')
   })
 
-})
+  const coinbaseProFeed = new CoinbaseProFeed()
+  const priceEvents = coinbaseProFeed.priceEvents
+  ipcMain.once('CurrentPriceMounted', (event, arg) => {
+    priceEvents.on('price', price => {
+      event.reply('price', price)
+    })
+  })
+
+}) // app.whenReady().then(() => { ...
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

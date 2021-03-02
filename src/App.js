@@ -1,21 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import CoinbaseProFeed from './CoinbaseProFeed'
 import CurrentPrice from './CurrentPrice'
 import NotificationForm from './NotificationForm'
 import NotificationList from './NotificationList'
-import NotificationManager from './NotificationManager'
 const { ipcRenderer } = window.require('electron')
 
 function App() {
-  const coinbaseProFeed = new CoinbaseProFeed()
-  const priceEvents = coinbaseProFeed.priceEvents
-
-  const notificationManager = new NotificationManager()
-  notificationManager.listen(priceEvents)
-
-
-
   return (
     <div className="App">
       <header className="App-header">
@@ -23,11 +13,9 @@ function App() {
         <p>
           Crypto Toolkit
         </p>
-        <CurrentPrice events={priceEvents} />
+        <CurrentPrice />
         <NotificationForm callbacks={{addNotification: function(price){
-          notificationManager.newNotification("BTC", price).then(notif => {
-            console.log('set notification:', notif)
-          })
+          console.log('set notification:', price)
         }}} />
         <NotificationList />
         <button onClick={()=>{
@@ -35,7 +23,7 @@ function App() {
           ipcRenderer.once('pong', (event, arg) => {
             console.log('pong', arg)
           })
-        }}>Something</button>
+        }}>Test Ping-Pong</button>
       </header>
     </div>
   );

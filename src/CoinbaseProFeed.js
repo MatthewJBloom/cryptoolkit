@@ -81,4 +81,4 @@ class CoinbaseProFeed {
 }
 
 
-export default CoinbaseProFeed
+module.exports = CoinbaseProFeed

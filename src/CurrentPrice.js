@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
+const { ipcRenderer } = window.require('electron')
 
 class CurrentPrice extends Component {
-  constructor(props) {
+  constructor() {
     super()
     this.state = {price: 0}
-    this.priceEvents = props.events
   }
 
   // When the component has been rendered to the DOM
   componentDidMount() {
-    this.priceEvents.on('price', price => {
+    ipcRenderer.send('CurrentPriceMounted')
+    ipcRenderer.on('price', (event, arg) => {
       this.setState(state => ({
-        price: price
+        price: arg
       }))
     })
   }
