@@ -12,7 +12,8 @@ This project is a React + Electron App for observing and trading crypto
 - [ ] Implement new scripts to only have to run one script to run & one script to build (https://itnext.io/4-solutions-to-run-multiple-node-js-or-npm-commands-simultaneously-9edaa6215a93)
 - [ ] Implement NotificationManager and Notify (rename)
 - [ ] Tie Notif-Man & Notif into Notif-Form & List
-- [ ] Research Babel/Webpack & ipcMain, contextBridge
+- [x] Research Babel/Webpack & ipcMain, contextBridge
+- [ ] Organize & document architecture (App components vs Main components)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
