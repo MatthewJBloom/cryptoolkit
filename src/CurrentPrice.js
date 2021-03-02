@@ -4,9 +4,10 @@ class CurrentPrice extends Component {
   constructor(props) {
     super()
     this.state = {price: 0}
-    this.priceEvents = props.events.priceEvents
+    this.priceEvents = props.events
   }
 
+  // When the component has been rendered to the DOM
   componentDidMount() {
     this.priceEvents.on('price', price => {
       this.setState(state => ({
@@ -14,6 +15,11 @@ class CurrentPrice extends Component {
       }))
     })
   }
+
+  // When the component unmounts from the DOM
+  // componentWillUnmount() {
+  //
+  // }
 
   render() {
     return (
