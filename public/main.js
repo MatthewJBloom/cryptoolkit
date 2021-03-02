@@ -2,8 +2,8 @@
 const { app, BrowserWindow, Notification, ipcMain } = require('electron')
 const path = require('path')
 // Custom Classes
-const CoinbaseProFeed = require('../src/CoinbaseProFeed')
-const NotificationManager = require('../src/NotificationManager')
+const CoinbaseProFeed = require('./CoinbaseProFeed')
+const NotificationManager = require('./NotificationManager')
 
 function createWindow () {
   // Create the browser window.
