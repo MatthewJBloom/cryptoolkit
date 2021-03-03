@@ -76,6 +76,21 @@ app.whenReady().then(() => {
     })
   })
 
+  ipcMain.once('NotificationListMounted', (event, arg) => {
+    console.log('Notification List Mounted')
+    notificationManager.notificationEvents.on('newNotification', notification_id => {
+      try {
+        event.reply('newNotification', notification_id)
+      } catch (e) {
+        if (e instanceof TypeError && e.message == 'Object has been destroyed') {
+          console.log(`TypeError: '${e.message}' mitigated.`)
+        } else {
+          throw e
+        }
+      }
+    })
+  })
+
 }) // app.whenReady().then(() => { ...
 
 // Quit when all windows are closed, except on macOS. There, it's common

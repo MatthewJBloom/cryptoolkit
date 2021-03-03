@@ -10,8 +10,8 @@ This project is a React + Electron App for observing and trading crypto
 - [x] Implement Electron
 - [x] Add build directions to README.md
 - [x] ~~Implement new scripts to only have to run one script to run & one script to build (https://itnext.io/4-solutions-to-run-multiple-node-js-or-npm-commands-simultaneously-9edaa6215a93)~~ (After trying this out... I prefer to have the app & main processes separate during development.)
-- [ ] Implement NotificationManager and Notify (rename)
-- [ ] Tie Notif-Man & Notif into Notif-Form & List
+- [x] Implement NotificationManager and Notify (rename)
+- [x] Tie Notif-Man & Notif into Notif-Form & List
 - [x] Research Babel/Webpack & ipcMain, contextBridge
 - [ ] Organize & document architecture (https://saurabhshah23.medium.com/react-js-architecture-features-folder-structure-design-pattern-70b7b9103f22)
 

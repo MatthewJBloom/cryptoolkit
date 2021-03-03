@@ -1,4 +1,5 @@
 const Notification = require('./Notify')
+const EventEmitter = require('events')
 
 /**
  * Represents a handler/manager for Notifications
@@ -9,7 +10,12 @@ class NotificationManager {
   constructor() {
     this.notifications = {}
     this.priceEvents = undefined
+    this.notificationEventEmitter = new EventEmitter()
   } // constructor()
+
+  get notificationEvents() {
+    return this.notificationEventEmitter
+  }
 
   /**
    * Create a new notification and add it to the notifications dict.
@@ -18,10 +24,11 @@ class NotificationManager {
    * @returns {Promise} notification - The notification
    */
   async newNotification(coin_id, price) {
-    let notification_id = this.getNewID(coin_id, price)
     let position = await this.getNewPosition(price)
+    let notification_id = this.getNewID(coin_id, position, price)
     let notification = new Notification(notification_id, coin_id, price, position)
     this.notifications[notification_id] = notification
+    this.notificationEventEmitter.emit('newNotification', notification_id)
     return notification
   } // newNotification(price)
 
@@ -30,8 +37,8 @@ class NotificationManager {
    * @param {string} coin_id
    * @param {float} price
    */
-  getNewID(coin_id, price) {
-    return `${coin_id}@${price}`
+  getNewID(coin_id, position, price) {
+    return `${coin_id} ${position} ${price}`
   } // getNewID()
 
   /**
