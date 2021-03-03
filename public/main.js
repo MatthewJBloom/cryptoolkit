@@ -39,7 +39,7 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  // Create CoinbaseProFeed
+  // Create CoinbaseProFeed to open a WebSocketClient with CoinbasePro
   const coinbaseProFeed = new CoinbaseProFeed()
 
   // Once the CurrentPrice component has mounted, reply with price events
@@ -62,17 +62,18 @@ app.whenReady().then(() => {
 
   // Create NotificationManager
   const notificationManager = new NotificationManager()
+  // Listen for priceEvents to check notifications
   notificationManager.listen(coinbaseProFeed.priceEvents)
 
-  // Once the NotificationForm component has mounted, listen for
-  // new notifications...
-  ipcMain.once('NotificationFormMounted', (event, arg) => {
-    console.log('Notification Form Mounted')
-  })
+  // Once the NotificationForm component has mounted,
+  // ...?
+  // ipcMain.once('NotificationFormMounted', (event, arg) => {
+  //   console.log('Notification Form Mounted')
+  // })
 
   ipcMain.on('NewNotification', (event, arg) => {
     notificationManager.newNotification("BTC", arg).then(notification => {
-      console.log('created new notification', notification)
+      // console.log('created new notification', notification)
     })
   })
 
@@ -81,6 +82,17 @@ app.whenReady().then(() => {
     notificationManager.notificationEvents.on('newNotification', notification_id => {
       try {
         event.reply('newNotification', notification_id)
+      } catch (e) {
+        if (e instanceof TypeError && e.message == 'Object has been destroyed') {
+          console.log(`TypeError: '${e.message}' mitigated.`)
+        } else {
+          throw e
+        }
+      }
+    })
+    notificationManager.notificationEvents.on('removeNotification', notification_id => {
+      try {
+        event.reply('removeNotification', notification_id)
       } catch (e) {
         if (e instanceof TypeError && e.message == 'Object has been destroyed') {
           console.log(`TypeError: '${e.message}' mitigated.`)

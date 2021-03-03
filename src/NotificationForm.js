@@ -29,7 +29,7 @@ class NotificationForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Price Alert<br />
+          New Price Alert<br />
           <input type="text" name="notif-price" value={this.state.value}
     onChange={this.handleChange} /><br />
         </label>

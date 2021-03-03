@@ -11,19 +11,27 @@ class NotificationList extends Component {
   componentDidMount() {
     ipcRenderer.send('NotificationListMounted')
     ipcRenderer.on('newNotification', (event, arg) => {
-      console.log(arg)
-      let tempValue = this.state.value
-      tempValue.push(arg)
+      // console.log('adding new notification:', arg)
       this.setState(state => ({
-        value: tempValue
+        value: arg
+      }))
+    })
+    ipcRenderer.on('removeNotification', (event, arg) => {
+      // console.log('removing notification:', arg)
+      this.setState(state => ({
+        value: arg
       }))
     })
   }
 
   render() {
+    let notifications = this.state.value
+    let formattedNotifs = notifications.map((notification) =>
+      <li>{notification}</li>
+    )
     return (
       <div>
-        {this.state.value}
+        <ul>{formattedNotifs}</ul>
       </div>
     )
   }
