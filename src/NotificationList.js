@@ -27,7 +27,7 @@ class NotificationList extends Component {
   render() {
     let notifications = this.state.value
     let formattedNotifs = notifications.map((notification) =>
-      <li>{notification}</li>
+      <li key={notification}>{notification}</li>
     )
     return (
       <div>
