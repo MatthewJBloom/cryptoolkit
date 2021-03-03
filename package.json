@@ -1,6 +1,6 @@
 {
   "name": "cryptoolkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "public/main.js",
   "homepage": "./",
   "dependencies": {
@@ -57,7 +57,7 @@
       "node_modules/**/*"
     ],
     "win": {
-      "target": "nsis"
+      "target": "portable"
     }
   },
   "description": "This project is a React + Electron App for observing and trading crypto",
