@@ -51,7 +51,8 @@ class CoinbaseProFeed {
   } // handleConnectionError(error)
 
   handleConnectionClose() {
-    console.log('Connection Closed')
+    console.log('Connection Closed | attempting to reconnect...')
+    this.startFeed()
   } // handleConnectionClose()
 
   handleConnectionMessage(message) {
