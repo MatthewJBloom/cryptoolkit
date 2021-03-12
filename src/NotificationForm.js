@@ -16,13 +16,13 @@ class NotificationForm extends Component {
 
   handleSubmit(event) {
     // alert(`this was submitted: ${this.state.value}`)
-    ipcRenderer.send('NotificationFormSubmit', this.state.value)
+    ipcRenderer.send('NotificationForm:submit', this.state.value)
     event.preventDefault()
   }
 
   // When the component has been rendered to the DOM
   componentDidMount() {
-    ipcRenderer.send('NotificationFormDidMount')
+    ipcRenderer.send('NotificationForm:didMount')
   }
 
   render() {

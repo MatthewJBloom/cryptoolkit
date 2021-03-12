@@ -9,7 +9,7 @@ class NotificationList extends Component {
 
   // When the component has been rendered to the DOM
   componentDidMount() {
-    ipcRenderer.send('NotificationListDidMount')
+    ipcRenderer.send('NotificationList:didMount')
     ipcRenderer.on('NotificationManager:change', (event, arg) => {
       // console.log('adding new notification:', arg)
       this.setState(state => ({
