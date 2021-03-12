@@ -19,12 +19,15 @@ function createWindow () {
   // Hide the menu bar
   mainWindow.removeMenu()
 
-  // Load either 'http://localhost:3000' or `file://${path.join(__dirname, '../build/index.html')}`
+  // Load either 'http://localhost:3000'
+  // or `file://${path.join(__dirname, '../build/index.html')}`
   const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`
   mainWindow.loadURL(startUrl)
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // Open the DevTools if running as dev
+  if (process.env.ELECTRON_START_URL) {
+    mainWindow.webContents.openDevTools()
+  }
 }
 
 // This method will be called when Electron has finished
