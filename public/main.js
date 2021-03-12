@@ -43,7 +43,7 @@ app.whenReady().then(() => {
   })
 
   // Core Application Lifecycle:
-  
+
   // Create a websocket connection with coinbase pro and listen for trades.
   // Create a notification manager to create notifications and listen to trades
   // and trigger the notifications if their conditions are met.
@@ -57,8 +57,13 @@ app.whenReady().then(() => {
   // Listen for priceEvents to check notifications statuses
   notificationManager.listen(coinbaseProFeed.priceEvents)
 
+  // Core Application Event Handlers
+
+  // ipcMain emits events sent from front-end components via ipcRenderer.send().
+  // Use .on() or .once() to handle and reply to Renderer events.
+
   // Once the CurrentPrice component has mounted, reply with price events
-  // from the CoinbaseProFeed priceEvents EventEmitter
+  // from the CoinbaseProFeed priceEvents EventEmitter.
   ipcMain.once('CurrentPriceMounted', (event, arg) => {
     coinbaseProFeed.priceEvents.on('price', price => {
       // Catch errors when closing the app and a reply tries to sneak through
@@ -74,23 +79,23 @@ app.whenReady().then(() => {
     })
   })
 
-  // Once the NotificationForm component has mounted,
-  // ...?
-  // ipcMain.once('NotificationFormMounted', (event, arg) => {
-  //   console.log('Notification Form Mounted')
-  // })
-
+  // On a new notification from the NotificationForm, send it to the
+  // notification manager.
+  // Defaults to BTC TODO: move BTC to global setting.
   ipcMain.on('NewNotification', (event, arg) => {
     // Send the new notification to the Notification Manager (resolves with notification)
     notificationManager.newNotification("BTC", arg).then(notification => {
-      // console.log('created new notification', notification)
+      console.log('created new notification:', notification.id)
     })
   })
 
+  // Once the notification list component has mounted, start replying to it
+  // every time the notification manager emits a change to notifications
   ipcMain.once('NotificationListMounted', (event, arg) => {
-    notificationManager.notificationEvents.on('newNotification', notification_id => {
+    // On a change to notifications, reply with current list of notifications
+    notificationManager.notificationEvents.on('newNotification', notification_ids => {
       try {
-        event.reply('newNotification', notification_id)
+        event.reply('newNotification', notification_ids)
       } catch (e) {
         if (e instanceof TypeError && e.message == 'Object has been destroyed') {
           console.log(`TypeError: '${e.message}' mitigated.`)
@@ -99,9 +104,9 @@ app.whenReady().then(() => {
         }
       }
     })
-    notificationManager.notificationEvents.on('removeNotification', notification_id => {
+    notificationManager.notificationEvents.on('removeNotification', notification_ids => {
       try {
-        event.reply('removeNotification', notification_id)
+        event.reply('removeNotification', notification_ids)
       } catch (e) {
         if (e instanceof TypeError && e.message == 'Object has been destroyed') {
           console.log(`TypeError: '${e.message}' mitigated.`)

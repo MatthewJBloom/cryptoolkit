@@ -103,11 +103,7 @@ class NotificationManager {
           delete this.notifications[notification_id]
           this.notificationEventEmitter.emit('removeNotification', Object.keys(this.notifications))
         }
-      } else {
-        //TODO: actually delete the notification not just the dict val
-        // delete this.notifications[notification_id]
-        // this.notificationEventEmitter.emit('removeNotification', Object.keys(this.notifications))
-      } // if position above (if price above), elif position low (if price low)
+      }
     } // for (const notification_id in this.notifications)
   } // priceEventHandler(price)
 
