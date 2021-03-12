@@ -10,18 +10,8 @@ class NotificationManager {
   constructor() {
     this.notifications = {}
     this.priceEvents = undefined
-    this.notificationEventEmitter = new EventEmitter()
+    this.events = new EventEmitter()
   } // constructor()
-
-  /**
-   * Property notificationEvents, an EventEmitter
-   * on new notification, emit ('newNotification', notifications list)
-   * on sending notif, emit ('removeNotification', notifications list)
-   * @returns {EventEmitter}
-   */
-  get notificationEvents() {
-    return this.notificationEventEmitter
-  }
 
   /**
    * Create a new notification and add it to the notifications dict.
@@ -34,7 +24,7 @@ class NotificationManager {
     let notification_id = this.getNewID(coin_id, position, price)
     let notification = new Notification(notification_id, coin_id, price, position)
     this.notifications[notification_id] = notification
-    this.notificationEventEmitter.emit('newNotification', Object.keys(this.notifications))
+    this.events.emit('change', Object.keys(this.notifications))
     return notification
   } // newNotification(price)
 
@@ -94,14 +84,14 @@ class NotificationManager {
           this.notifications[notification_id].send()
           //TODO: actually delete the notification not just the dict val
           delete this.notifications[notification_id]
-          this.notificationEventEmitter.emit('removeNotification', Object.keys(this.notifications))
+          this.events.emit('change', Object.keys(this.notifications))
         }
       } else if (this.notifications[notification_id].position === "below") {
         if (price <= this.notifications[notification_id].price) {
           this.notifications[notification_id].send()
           //TODO: actually delete the notification not just the dict val
           delete this.notifications[notification_id]
-          this.notificationEventEmitter.emit('removeNotification', Object.keys(this.notifications))
+          this.events.emit('change', Object.keys(this.notifications))
         }
       }
     } // for (const notification_id in this.notifications)

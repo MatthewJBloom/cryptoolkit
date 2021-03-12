@@ -93,20 +93,9 @@ app.whenReady().then(() => {
   // every time the notification manager emits a change to notifications
   ipcMain.once('NotificationListDidMount', (event, arg) => {
     // On a change to notifications, reply with current list of notifications
-    notificationManager.notificationEvents.on('newNotification', notification_ids => {
+    notificationManager.events.on('change', notification_ids => {
       try {
-        event.reply('newNotification', notification_ids)
-      } catch (e) {
-        if (e instanceof TypeError && e.message == 'Object has been destroyed') {
-          console.log(`TypeError: '${e.message}' mitigated.`)
-        } else {
-          throw e
-        }
-      }
-    })
-    notificationManager.notificationEvents.on('removeNotification', notification_ids => {
-      try {
-        event.reply('removeNotification', notification_ids)
+        event.reply('NotificationManager:change', notification_ids)
       } catch (e) {
         if (e instanceof TypeError && e.message == 'Object has been destroyed') {
           console.log(`TypeError: '${e.message}' mitigated.`)
