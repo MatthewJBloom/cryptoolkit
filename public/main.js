@@ -72,13 +72,13 @@ app.whenReady().then(() => {
   // })
 
   ipcMain.on('NewNotification', (event, arg) => {
+    // Send the new notification to the Notification Manager (resolves with notification)
     notificationManager.newNotification("BTC", arg).then(notification => {
       // console.log('created new notification', notification)
     })
   })
 
   ipcMain.once('NotificationListMounted', (event, arg) => {
-    console.log('Notification List Mounted')
     notificationManager.notificationEvents.on('newNotification', notification_id => {
       try {
         event.reply('newNotification', notification_id)
