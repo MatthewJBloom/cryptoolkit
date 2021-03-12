@@ -55,7 +55,7 @@ app.whenReady().then(() => {
   // Create NotificationManager
   const notificationManager = new NotificationManager()
   // Listen for priceEvents to check notifications statuses
-  notificationManager.listen(coinbaseProFeed.priceEvents)
+  notificationManager.listen(coinbaseProFeed.events)
 
   // Core Application Event Handlers
 
@@ -65,7 +65,9 @@ app.whenReady().then(() => {
   // Once the CurrentPrice component has mounted, reply with price events
   // from the CoinbaseProFeed priceEvents EventEmitter.
   ipcMain.once('CurrentPrice:didMount', (event, arg) => {
-    coinbaseProFeed.priceEvents.on('price', price => {
+    // TODO: consider having coinbaseProFeed emit data and then replying with
+    // only data.price here instead. 
+    coinbaseProFeed.events.on('tick', price => {
       // Catch errors when closing the app and a reply tries to sneak through
       try {
         event.reply('CoinbaseProFeed:price', price)

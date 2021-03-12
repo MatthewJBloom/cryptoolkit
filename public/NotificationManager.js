@@ -3,13 +3,13 @@ const EventEmitter = require('events')
 
 /**
  * Represents a handler/manager for Notifications
- * Start by setting the priceEvents via listen(priceEvents)
+ * Start by setting the feedEvents via listen(feedEvents)
  * Then, make a new notification via newNotification(coin_id, price)
  */
 class NotificationManager {
   constructor() {
     this.notifications = {}
-    this.priceEvents = undefined
+    this.feedEvents = undefined
     this.events = new EventEmitter()
   } // constructor()
 
@@ -40,14 +40,14 @@ class NotificationManager {
   /**
    * Get a promise resolving to either "above" or "below"
    * @param {float} price
-   * - Get current price from this.priceEvents.once('price')
+   * - Get current price from this.feedEvents.once('price')
    * - Notification price is either above or below current price.
    * - Return the opposite, for priceEventHandler
    */
   getNewPosition(price) {
     return new Promise(resolve => {
       let position = ""
-      this.priceEvents.once('price', (current) => {
+      this.feedEvents.once('tick', (current) => {
         //console.log(current)
         if (current > price) {
           position = "below"
@@ -58,18 +58,18 @@ class NotificationManager {
         } else {
           console.log('Tried to set price to current price...')
         } // if current > or < price ...
-      }) // this.priceEvents.once('price', (current) => {...
+      }) // this.feedEvents.once('price', (current) => {...
     }) // return new Promise(resolve => {...
   } // getNewPosition()
 
   /**
    * Listen to an event emitter and route it to the handler
-   * @param {EventEmitter} priceEvents - emits a float on price
+   * @param {EventEmitter} feedEvents - emits a float on price
    */
-  listen(priceEvents) {
-    this.priceEvents = priceEvents
-    this.priceEvents.on('price', this.priceEventHandler.bind(this))
-  } // listen(priceEvents)
+  listen(feedEvents) {
+    this.feedEvents = feedEvents
+    this.feedEvents.on('tick', this.priceEventHandler.bind(this))
+  } // listen(feedEvents)
 
   /**
    * Handle price changes, checking the current notifications to see if

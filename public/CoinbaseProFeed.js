@@ -8,7 +8,7 @@ const EventEmitter = require('events')
 class CoinbaseProFeed {
   constructor() {
     this.client = new WebSocketClient()
-    this.priceEventEmitter = new EventEmitter()
+    this.events = new EventEmitter()
     this.url = "wss://ws-feed.pro.coinbase.com"
     this.subscription = {
       type: "subscribe",
@@ -25,10 +25,6 @@ class CoinbaseProFeed {
   startFeed() {
     this.client.connect(this.url)
   } // startFeed()
-
-  get priceEvents() {
-    return this.priceEventEmitter
-  } // get priceEvents()
 
   // ---- HANDLERS ---- //
 
@@ -68,7 +64,7 @@ class CoinbaseProFeed {
           break
         case 'ticker':
           // this.printTicker(data)
-          this.priceEventEmitter.emit('price', data.price)
+          this.events.emit('tick', data.price)
           break
         default:
           console.log('UNIMPLEMENTED TYPE CASE:', type)
