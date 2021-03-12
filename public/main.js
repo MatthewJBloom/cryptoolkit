@@ -64,7 +64,7 @@ app.whenReady().then(() => {
 
   // Once the CurrentPrice component has mounted, reply with price events
   // from the CoinbaseProFeed priceEvents EventEmitter.
-  ipcMain.once('CurrentPriceMounted', (event, arg) => {
+  ipcMain.once('CurrentPriceDidMount', (event, arg) => {
     coinbaseProFeed.priceEvents.on('price', price => {
       // Catch errors when closing the app and a reply tries to sneak through
       try {
@@ -82,7 +82,7 @@ app.whenReady().then(() => {
   // On a new notification from the NotificationForm, send it to the
   // notification manager.
   // Defaults to BTC TODO: move BTC to global setting.
-  ipcMain.on('NewNotification', (event, arg) => {
+  ipcMain.on('NotificationFormSubmit', (event, arg) => {
     // Send the new notification to the Notification Manager (resolves with notification)
     notificationManager.newNotification("BTC", arg).then(notification => {
       console.log('created new notification:', notification.id)
@@ -91,7 +91,7 @@ app.whenReady().then(() => {
 
   // Once the notification list component has mounted, start replying to it
   // every time the notification manager emits a change to notifications
-  ipcMain.once('NotificationListMounted', (event, arg) => {
+  ipcMain.once('NotificationListDidMount', (event, arg) => {
     // On a change to notifications, reply with current list of notifications
     notificationManager.notificationEvents.on('newNotification', notification_ids => {
       try {

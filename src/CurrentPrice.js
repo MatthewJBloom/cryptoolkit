@@ -9,7 +9,7 @@ class CurrentPrice extends Component {
 
   // When the component has been rendered to the DOM
   componentDidMount() {
-    ipcRenderer.send('CurrentPriceMounted')
+    ipcRenderer.send('CurrentPriceDidMount')
     ipcRenderer.on('price', (event, arg) => {
       this.setState(state => ({
         price: arg
