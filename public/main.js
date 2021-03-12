@@ -42,13 +42,24 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
+  // Core Application Lifecycle:
+  
+  // Create a websocket connection with coinbase pro and listen for trades.
+  // Create a notification manager to create notifications and listen to trades
+  // and trigger the notifications if their conditions are met.
+
   // Create CoinbaseProFeed to open a WebSocketClient with CoinbasePro
   const coinbaseProFeed = new CoinbaseProFeed()
+  // Start the coinbaseProFeed
+  coinbaseProFeed.startFeed()
+  // Create NotificationManager
+  const notificationManager = new NotificationManager()
+  // Listen for priceEvents to check notifications statuses
+  notificationManager.listen(coinbaseProFeed.priceEvents)
 
   // Once the CurrentPrice component has mounted, reply with price events
   // from the CoinbaseProFeed priceEvents EventEmitter
   ipcMain.once('CurrentPriceMounted', (event, arg) => {
-    coinbaseProFeed.startFeed()
     coinbaseProFeed.priceEvents.on('price', price => {
       // Catch errors when closing the app and a reply tries to sneak through
       try {
@@ -62,11 +73,6 @@ app.whenReady().then(() => {
       }
     })
   })
-
-  // Create NotificationManager
-  const notificationManager = new NotificationManager()
-  // Listen for priceEvents to check notifications
-  notificationManager.listen(coinbaseProFeed.priceEvents)
 
   // Once the NotificationForm component has mounted,
   // ...?
