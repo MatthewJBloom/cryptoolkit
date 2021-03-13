@@ -54,7 +54,7 @@ app.whenReady().then(() => {
   coinbaseProFeed.startFeed()
   // Create NotificationManager
   const notificationManager = new NotificationManager()
-  // Listen for priceEvents to check notifications statuses
+  // Listen for coinbaseProFeed events to check notifications statuses
   notificationManager.listen(coinbaseProFeed.events)
 
   // Core Application Event Handlers
@@ -66,7 +66,7 @@ app.whenReady().then(() => {
   // from the CoinbaseProFeed priceEvents EventEmitter.
   ipcMain.once('CurrentPrice:didMount', (event, arg) => {
     // TODO: consider having coinbaseProFeed emit data and then replying with
-    // only data.price here instead. 
+    // only data.price here instead.
     coinbaseProFeed.events.on('tick', price => {
       // Catch errors when closing the app and a reply tries to sneak through
       try {

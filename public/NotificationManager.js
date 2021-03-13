@@ -9,7 +9,7 @@ const EventEmitter = require('events')
 class NotificationManager {
   constructor() {
     this.notifications = {}
-    this.feedEvents = undefined
+    this.feedEvents = undefined // Set with this.listen(EventEmitter)
     this.events = new EventEmitter()
   } // constructor()
 
@@ -50,12 +50,17 @@ class NotificationManager {
       this.feedEvents.once('tick', (current) => {
         //console.log(current)
         if (current > price) {
+          // If the current price is above the notification price, then our
+          // condition will be if current price falls below the notification's.
           position = "below"
           resolve(position)
         } else if (current < price) {
+          // If the current price is below the notification price, then our
+          // condition will be if current price rises above the notification's.
           position = "above"
           resolve(position)
         } else {
+          // TODO: Handle this somehow...
           console.log('Tried to set price to current price...')
         } // if current > or < price ...
       }) // this.feedEvents.once('price', (current) => {...
@@ -77,19 +82,20 @@ class NotificationManager {
    * @param {float} price - e.g. 50000.00 as in USD
    */
   priceEventHandler(price) {
+    // Iterate over current notifications
     for (const notification_id in this.notifications) {
-      //console.log(`${notification_id}: ${JSON.stringify(this.notifications[notification_id])}`)
+      // If the notification's position is now satisfied...
       if (this.notifications[notification_id].position === "above") {
         if (price >= this.notifications[notification_id].price) {
+          // ...then trigger the notification, remove it, & emit the change.
           this.notifications[notification_id].send()
-          //TODO: actually delete the notification not just the dict val
           delete this.notifications[notification_id]
           this.events.emit('change', Object.keys(this.notifications))
         }
       } else if (this.notifications[notification_id].position === "below") {
         if (price <= this.notifications[notification_id].price) {
+          // ...then trigger the notification, remove it, & emit the change.
           this.notifications[notification_id].send()
-          //TODO: actually delete the notification not just the dict val
           delete this.notifications[notification_id]
           this.events.emit('change', Object.keys(this.notifications))
         }
