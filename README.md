@@ -2,28 +2,6 @@
 
 This project is a React + Electron App for observing and trading crypto
 
-## Todo
-
-- [x] Extract CoinbaseProFeed for use in multiple components
-- [x] Make a current-btc-usd string component and use that instead of ^
-- [ ] Customize app (favicon, title, readme, etc)
-- [x] Implement Electron
-- [x] Add build directions to README.md
-- [x] ~~Implement new scripts to only have to run one script to run & one script to build (https://itnext.io/4-solutions-to-run-multiple-node-js-or-npm-commands-simultaneously-9edaa6215a93)~~ (After trying this out... I prefer to have the app & main processes separate during development.)
-- [x] Implement NotificationManager and Notify (rename)
-- [x] Tie Notif-Man & Notif into Notif-Form & List
-- [x] Research Babel/Webpack & ipcMain, contextBridge
-- [ ] Organize & document architecture (https://saurabhshah23.medium.com/react-js-architecture-features-folder-structure-design-pattern-70b7b9103f22)
-- [x] Add removeNotification event & implement in NotificationList
-- [x] Add data validation on NotificationForm
-- [ ] Add new prop to CoinbaseProFeed, mostRecentPrice, instead of using .once all the time
-- [x] Add feature to delete active notification
-- [ ] Add Victory for graphs and make a candles graph component
-- [ ] Move this shit ^ to a GitHub Project board(?)
-
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -87,6 +65,8 @@ If you would rather build locally rather than using the most recent Release, her
 * `npm run build-electron`
 
 ***
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Learn More
 
