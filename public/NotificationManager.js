@@ -25,8 +25,19 @@ class NotificationManager {
     let notification = new Notification(notification_id, coin_id, price, position)
     this.notifications[notification_id] = notification
     this.events.emit('change', Object.keys(this.notifications))
+    console.log('created notification:', notification.id)
     return notification
   } // newNotification(price)
+
+  /**
+   * Remove a notification
+   * @param {string} notification_id
+   */
+  removeNotification(id) {
+    delete this.notifications[id]
+    this.events.emit('change', Object.keys(this.notifications))
+    console.log('removed notification:', id)
+  }
 
   /**
    * Get a new id for a new this.notifications key
@@ -89,15 +100,13 @@ class NotificationManager {
         if (price >= this.notifications[notification_id].price) {
           // ...then trigger the notification, remove it, & emit the change.
           this.notifications[notification_id].send()
-          delete this.notifications[notification_id]
-          this.events.emit('change', Object.keys(this.notifications))
+          this.removeNotification(notification_id)
         }
       } else if (this.notifications[notification_id].position === "below") {
         if (price <= this.notifications[notification_id].price) {
           // ...then trigger the notification, remove it, & emit the change.
           this.notifications[notification_id].send()
-          delete this.notifications[notification_id]
-          this.events.emit('change', Object.keys(this.notifications))
+          this.removeNotification(notification_id)
         }
       }
     } // for (const notification_id in this.notifications)

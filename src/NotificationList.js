@@ -18,10 +18,14 @@ class NotificationList extends Component {
     })
   }
 
+  removeNotification(notification) {
+    ipcRenderer.send('NotificationList:removeNotification', notification)
+  }
+
   render() {
     let notifications = this.state.value
     let formattedNotifs = notifications.map((notification) =>
-      <li key={notification}>{notification}</li>
+      <li key={notification}>{notification}<button onClick={this.removeNotification.bind(this,notification)}>x</button></li>
     )
     return (
       <div>

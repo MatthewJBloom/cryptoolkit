@@ -17,7 +17,7 @@ This project is a React + Electron App for observing and trading crypto
 - [x] Add removeNotification event & implement in NotificationList
 - [x] Add data validation on NotificationForm
 - [ ] Add new prop to CoinbaseProFeed, mostRecentPrice, instead of using .once all the time
-- [ ] Add feature to delete active notification
+- [x] Add feature to delete active notification
 - [ ] Add Victory for graphs and make a candles graph component
 - [ ] Move this shit ^ to a GitHub Project board(?)
 

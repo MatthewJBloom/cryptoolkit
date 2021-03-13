@@ -87,7 +87,8 @@ app.whenReady().then(() => {
   ipcMain.on('NotificationForm:submit', (event, arg) => {
     // Send the new notification to the Notification Manager (resolves with notification)
     notificationManager.newNotification("BTC", arg).then(notification => {
-      console.log('created notification:', notification.id)
+      // no-op...
+      // TODO: make this synchronous
     })
   })
 
@@ -106,6 +107,10 @@ app.whenReady().then(() => {
         }
       }
     })
+  })
+
+  ipcMain.on('NotificationList:removeNotification', (event, arg) => {
+    notificationManager.removeNotification(arg)
   })
 
 }) // app.whenReady().then(() => { ...
