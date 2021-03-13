@@ -32,6 +32,7 @@ class Alert {
    * Also, mark it as sent if it is single use.
    */
   send() {
+    console.log('sending notification:', this.id)
     if (!this.hasBeenSent) {
       this.notification.show()
       if (this.singleUse) {
