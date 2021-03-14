@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import CurrentPrice from './CurrentPrice'
 import NotificationForm from './NotificationForm'
@@ -8,7 +7,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Crypto Toolkit
         </p>
