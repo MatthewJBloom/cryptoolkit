@@ -24,9 +24,7 @@ class CurrentPrice extends Component {
 
   render() {
     return (
-      <div>
-        ${this.state.price}
-      </div>
+      <span>{this.state.price}</span>
     )
   }
 }
