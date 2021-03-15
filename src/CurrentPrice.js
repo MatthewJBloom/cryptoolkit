@@ -12,7 +12,8 @@ class CurrentPrice extends Component {
     ipcRenderer.send('CurrentPrice:didMount')
     ipcRenderer.on('CoinbaseProFeed:price', (event, arg) => {
       this.setState(state => ({
-        price: arg
+        // Parse price as float, then save at 2 decimal points
+        price: parseFloat(arg).toFixed(2)
       }))
     })
   }
