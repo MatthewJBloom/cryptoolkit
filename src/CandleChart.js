@@ -13,9 +13,16 @@ const { ipcRenderer } = window.require('electron')
 //   {x: new Date(2016, 6, 5), open: 10, close: 8, high: 15, low: 5}
 // ]
 
+// TODO: jk actually build a whole new class CoinbaseProAPI for synchronous
+// api requests. Use that for Historic Rates
+// (https://docs.pro.coinbase.com/#get-historic-rates)
+// That will get historic rates. Separately, use the Feed to generate the
+// current candle. 
+
 class CandleChart extends Component {
   constructor() {
     super()
+    // SAMPLE DATA...
     this.state = {data: [
       {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
       {x: new Date(2016, 6, 2), open: 10, close: 15, high: 20, low: 5},
