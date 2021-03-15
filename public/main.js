@@ -67,10 +67,10 @@ app.whenReady().then(() => {
   ipcMain.once('CurrentPrice:didMount', (event, arg) => {
     // TODO: consider having coinbaseProFeed emit data and then replying with
     // only data.price here instead.
-    coinbaseProFeed.events.on('tick', price => {
+    coinbaseProFeed.events.on('tick', data => {
       // Catch errors when closing the app and a reply tries to sneak through
       try {
-        event.reply('CoinbaseProFeed:price', price)
+        event.reply('CoinbaseProFeed:price', data.price)
       } catch (e) {
         if (e instanceof TypeError && e.message == 'Object has been destroyed') {
           console.log(`TypeError: '${e.message}' mitigated.`)
@@ -111,6 +111,21 @@ app.whenReady().then(() => {
 
   ipcMain.on('NotificationList:removeNotification', (event, arg) => {
     notificationManager.removeNotification(arg)
+  })
+
+  ipcMain.on('CandleChart:didMount', (event, arg) => {
+    coinbaseProFeed.events.on('tick', data => {
+      // Catch errors when closing the app and a reply tries to sneak through
+      try {
+        event.reply('CoinbaseProFeed:tick', data)
+      } catch (e) {
+        if (e instanceof TypeError && e.message == 'Object has been destroyed') {
+          console.log(`TypeError: '${e.message}' mitigated.`)
+        } else {
+          throw e
+        }
+      }
+    })
   })
 
 }) // app.whenReady().then(() => { ...

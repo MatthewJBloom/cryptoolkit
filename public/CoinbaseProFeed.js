@@ -64,7 +64,7 @@ class CoinbaseProFeed {
           break
         case 'ticker':
           // this.printTicker(data)
-          this.events.emit('tick', data.price)
+          this.events.emit('tick', data)
           break
         default:
           console.log('UNIMPLEMENTED TYPE CASE:', type)

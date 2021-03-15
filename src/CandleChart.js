@@ -28,10 +28,12 @@ class CandleChart extends Component {
   // When the component has been rendered to the DOM
   componentDidMount() {
     ipcRenderer.send('CandleChart:didMount')
-    ipcRenderer.on('CoinbaseProFeed:trade', (event, arg) => {
-      this.setState(state => ({
-        data: arg
-      }))
+    ipcRenderer.on('CoinbaseProFeed:tick', (event, arg) => {
+      // console.log(arg)
+      // newVal = {x: arg.time, open: arg.open_24h, close: arg}
+      // this.setState(state => ({
+      //   data: arg
+      // }))
     })
   }
 
