@@ -8,12 +8,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <CandleChart />
-        <h1>
-          $<CurrentPrice />
-        </h1>
-        <NotificationForm />
-        <NotificationList />
+        <div>
+          <h1>
+            $<CurrentPrice />
+          </h1>
+          <NotificationForm />
+          <NotificationList />
+        </div>
+        <div>
+          <CandleChart />
+        </div>
       </header>
     </div>
   );
