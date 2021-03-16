@@ -14,7 +14,7 @@ const options = {
   path: '/products/BTC-USD/candles',
   method: 'GET',
   headers: {
-    'User-Agent': 'nodejs'
+    'User-Agent': 'nodejs/v14.15.5'
   }
 }
 
