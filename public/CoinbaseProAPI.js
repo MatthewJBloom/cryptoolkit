@@ -4,6 +4,11 @@ const https = require('https')
  * Represents a CoinbasePro API Request
  *
  */
+const data = JSON.stringify({
+  some: 'data'
+})
+
+
 const options = {
   hostname: 'api.pro.coinbase.com',
   path: '/products/BTC-USD/candles',
