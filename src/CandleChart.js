@@ -31,7 +31,7 @@ class CandleChart extends Component {
       >
         <VictoryAxis
           // X axis, time
-          tickFormat={(t) => `${t.getDate()}/${t.getMonth()}`}
+          tickFormat={(t) => `${t.getMinutes()}`}
         />
         <VictoryAxis
           // Y axis, candle
