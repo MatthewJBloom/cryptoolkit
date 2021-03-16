@@ -8,14 +8,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div>
+        <div className="Panel">
           <h1>
             $<CurrentPrice />
           </h1>
           <NotificationForm />
           <NotificationList />
         </div>
-        <div>
+        <div className="Panel">
           <CandleChart />
         </div>
       </header>

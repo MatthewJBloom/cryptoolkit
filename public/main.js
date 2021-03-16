@@ -3,6 +3,7 @@ const { app, BrowserWindow, Notification, ipcMain } = require('electron')
 const path = require('path')
 // Custom Classes
 const CoinbaseProFeed = require('./CoinbaseProFeed')
+const CoinbaseProAPI = require('./CoinbaseProAPI')
 const NotificationManager = require('./NotificationManager')
 // NOTE: any requirements for the main process have to be in /public
 
@@ -56,6 +57,8 @@ app.whenReady().then(() => {
   const notificationManager = new NotificationManager()
   // Listen for coinbaseProFeed events to check notifications statuses
   notificationManager.listen(coinbaseProFeed.events)
+  // Create a CoinbaseProAPI instance for public api requests.
+  const coinbaseProAPI = new CoinbaseProAPI()
 
   // Core Application Event Handlers
 
@@ -65,11 +68,11 @@ app.whenReady().then(() => {
   // Once the CurrentPrice component has mounted, reply with price events
   // from the CoinbaseProFeed priceEvents EventEmitter.
   ipcMain.once('CurrentPrice:didMount', (event, arg) => {
-    // TODO: consider having coinbaseProFeed emit data and then replying with
-    // only data.price here instead.
+    // CoinbaseProFeed tick event returns data including price
     coinbaseProFeed.events.on('tick', data => {
       // Catch errors when closing the app and a reply tries to sneak through
       try {
+        // Reply with just the price from the tick data
         event.reply('CoinbaseProFeed:price', data.price)
       } catch (e) {
         if (e instanceof TypeError && e.message == 'Object has been destroyed') {
@@ -109,23 +112,40 @@ app.whenReady().then(() => {
     })
   })
 
+  // When the user removes a notification, execute the removal.
   ipcMain.on('NotificationList:removeNotification', (event, arg) => {
     notificationManager.removeNotification(arg)
   })
 
-  ipcMain.on('CandleChart:didMount', (event, arg) => {
-    coinbaseProFeed.events.on('tick', data => {
-      // Catch errors when closing the app and a reply tries to sneak through
-      try {
-        event.reply('CoinbaseProFeed:tick', data)
-      } catch (e) {
-        if (e instanceof TypeError && e.message == 'Object has been destroyed') {
-          console.log(`TypeError: '${e.message}' mitigated.`)
-        } else {
-          throw e
-        }
-      }
+  // Once the Candle Chart has mounted, reply with
+  ipcMain.once('CandleChart:didMount', (event, arg) => {
+    coinbaseProAPI.getCandles().then(candles => {
+      // Candles format is:
+      // [
+      //   [ time, low, high, open, close, volume ],
+      //   [ 1615863720, 54559.31, 54646.88, 54622.42, 54559.31, 5.25995905 ],
+      //   [ etc... ]
+      // Target format is:
+      // const data = [
+      //   {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
+      //   {x: new Date(2016, 6, 2), open: 10, close: 15, high: 20, low: 5},
+      //   { etc... }
+      // ]
+      let data = []
+      candles.forEach(candle => {
+        data.push({
+          x: new Date(candle[0]),
+          low: candle[1],
+          high: candle[2],
+          open: candle[3],
+          close: candle[4]
+        })
+      })
+      // console.log(candles)
+      event.reply('CoinbaseProAPI:candles', data)
     })
+    // TODO: after sending the historic trades, start sending new trades
+    // to fill up the current candle
   })
 
 }) // app.whenReady().then(() => { ...
