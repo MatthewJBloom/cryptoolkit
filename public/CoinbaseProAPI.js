@@ -14,19 +14,22 @@ class CoinbaseProAPI {
 
   getCandles() {
     return new Promise(resolve => {
-      let start = new Date()
-      start.setDate(start.getDate()-1)
-      let end = new Date()
+      let granularity = {
+        '1m': 60,
+        '5m': 300,
+        '15m': 900,
+        '1h': 3600,
+        '6h': 21600,
+        '1d': 86400
+      }
       let options = {
         hostname: hostname,
-        // path: `/products/BTC-USD/candles?start=${start.toISOString()}&end=${end.toISOString()}&granularity=60`,
-        path: `/products/BTC-USD/candles?granularity=300`,
+        path: `/products/BTC-USD/candles?granularity=${granularity['5m']}`,
         method: "GET",
         headers: {
           'User-Agent': userAgent
         }
       }
-      // let results = Buffer.alloc(0)
 
       let req = https.request(options, res => {
         let results = ""

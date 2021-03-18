@@ -17,7 +17,7 @@ class CandleChart extends Component {
     ipcRenderer.on('CoinbaseProAPI:candles', (event, arg) => {
       // console.log(arg)
       this.setState(state => ({
-        data: arg
+        data: arg//.slice(-50)
       }))
     })
   }
@@ -31,7 +31,7 @@ class CandleChart extends Component {
       >
         <VictoryAxis
           // X axis, time
-          tickFormat={(t) => `${t.getMinutes()}`}
+          tickFormat={(t) => `${t.getHours()}:${t.getMinutes()}`}
         />
         <VictoryAxis
           // Y axis, candle

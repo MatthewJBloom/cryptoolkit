@@ -133,8 +133,13 @@ app.whenReady().then(() => {
       // ]
       let data = []
       candles.forEach(candle => {
+        // If the timestamp is more than 60 minutes ago, skip it
+        let timestamp = new Date(candle[0]*1000)
+        if (timestamp < new Date(new Date() - 60*60000)) {
+          return // aka `continue` in this case, skip the push
+        }
         data.push({
-          x: new Date(candle[0]),
+          x: timestamp,
           low: candle[1],
           high: candle[2],
           open: candle[3],
