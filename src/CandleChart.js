@@ -17,7 +17,7 @@ class CandleChart extends Component {
     ipcRenderer.on('CoinbaseProAPI:candles', (event, arg) => {
       // console.log(arg)
       this.setState(state => ({
-        data: arg//.slice(-50)
+        data: arg.slice(-50)
       }))
     })
   }

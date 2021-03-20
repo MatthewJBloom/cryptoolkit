@@ -12,7 +12,12 @@ class CoinbaseProAPI {
     // Uhhhhh
   }
 
-  getCandles() {
+  /**
+   * Gets a list of lists of candles
+   * @param {string} length - the length of the candle in simplified time
+   * e.g. 1m, 5m, 15m, 1h, 6h, 1d
+   */
+  getCandles(length='5m') {
     return new Promise(resolve => {
       let granularity = {
         '1m': 60,
@@ -24,7 +29,7 @@ class CoinbaseProAPI {
       }
       let options = {
         hostname: hostname,
-        path: `/products/BTC-USD/candles?granularity=${granularity['5m']}`,
+        path: `/products/BTC-USD/candles?granularity=${granularity[length]}`,
         method: "GET",
         headers: {
           'User-Agent': userAgent
@@ -35,11 +40,12 @@ class CoinbaseProAPI {
         let results = ""
         console.log(`${options.method} ${options.path} statusCode: ${res.statusCode}`)
         res.on('data', d => {
-          // results.write(d)
           results += d.toString()
         })
         res.on('end', () => {
-          resolve(JSON.parse(results))
+          // Parse the results and sort them.
+          // Sorts chronologically 
+          resolve(JSON.parse(results).sort())
         })
       })
 
@@ -52,41 +58,5 @@ class CoinbaseProAPI {
     })
   }
 } // CoinbaseProAPI
-
-
-// const data = JSON.stringify({
-//   some: 'data'
-// })
-//
-//
-// const options = {
-//   hostname: 'api.pro.coinbase.com',
-//   path: '/products/BTC-USD/candles',
-//   method: 'GET',
-//   headers: {
-//     'User-Agent': `nodejs/${process.version}`
-//   }
-// }
-//
-// const req = https.request(options, res => {
-//   console.log(`statusCode: ${res.statusCode}`)
-//
-//   res.on('data', d => {
-//     process.stdout.write(d)
-//   })
-// })
-//
-// req.on('error', e => {
-//   console.error(e)
-// })
-//
-// req.end()
-
-// const coinbaseProAPI = new CoinbaseProAPI
-// coinbaseProAPI.getProducts().then(data => {
-//   console.log(data)
-// }).catch(error => {
-//   console.error(error)
-// })
 
 module.exports = CoinbaseProAPI

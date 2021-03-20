@@ -119,25 +119,23 @@ app.whenReady().then(() => {
 
   // Once the Candle Chart has mounted, reply with
   ipcMain.once('CandleChart:didMount', (event, arg) => {
-    coinbaseProAPI.getCandles().then(candles => {
+    coinbaseProAPI.getCandles(length='5m').then(candles => {
+      // TODO: get length ^ from a dropdown select box component
       // Candles format is:
       // [
       //   [ time, low, high, open, close, volume ],
       //   [ 1615863720, 54559.31, 54646.88, 54622.42, 54559.31, 5.25995905 ],
       //   [ etc... ]
       // Target format is:
-      // const data = [
+      // [
       //   {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
       //   {x: new Date(2016, 6, 2), open: 10, close: 15, high: 20, low: 5},
       //   { etc... }
       // ]
       let data = []
       candles.forEach(candle => {
-        // If the timestamp is more than 60 minutes ago, skip it
+        // Convert seconds to Date and drop volume
         let timestamp = new Date(candle[0]*1000)
-        if (timestamp < new Date(new Date() - 60*60000)) {
-          return // aka `continue` in this case, skip the push
-        }
         data.push({
           x: timestamp,
           low: candle[1],
