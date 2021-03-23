@@ -28,6 +28,7 @@ class CandleChart extends Component {
         theme={VictoryTheme.material}
         domainPadding={1}
         scale={{x:'time'}}
+        padding={{top: 20, bottom: 40, left: 20, right: 80}}
       >
         <VictoryAxis
           // X axis, time
@@ -35,11 +36,15 @@ class CandleChart extends Component {
         />
         <VictoryAxis
           // Y axis, candle
+          style={{ axis: {stroke: "none"}}}
+          width={420}
+          offsetX={80}
+          orientation="right"
           dependentAxis
           tickFormat={(x)=>(`$${x/1000}k`)}
         />
         <VictoryCandlestick
-          style={{data: {stroke: "white", strokeWidth: .1}}}
+          style={{data: {stroke: "black", strokeWidth: .5}}}
           candleColors={{ positive: "green", negative: "red" }}
           data={this.state.data}
         />

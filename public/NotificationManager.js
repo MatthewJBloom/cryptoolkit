@@ -59,7 +59,7 @@ class NotificationManager {
     return new Promise(resolve => {
       let position = ""
       this.feedEvents.once('tick', (current) => {
-        console.log(`current: ${current.price}, alert at ${price}`)
+        // console.log(`current: ${current.price}, alert at ${price}`)
         if (current.price > price) {
           // If the current price is above the notification price, then our
           // condition will be if current price falls below the notification's.
